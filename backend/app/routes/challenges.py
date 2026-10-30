@@ -7,22 +7,27 @@ router = APIRouter(prefix="/challenges", tags=["Challenges"])
 
 
 @router.get("", response_model=List[ChallengeBase], summary="List all learning challenges")
+@router.get("/", response_model=List[ChallengeBase], include_in_schema=False)
 def list_challenges(
-    category: Optional[str] = Query(None, description="Filter by category (e.g. 'Algorithms', 'Physics')"),
-    difficulty: Optional[str] = Query(None, description="Filter by difficulty ('Easy', 'Medium', 'Hard')"),
+    difficulty: Optional[str] = Query(None, description="Filter by difficulty ('Beginner', 'Easy', 'Medium', 'Hard')"),
+    topic: Optional[str] = Query(None, description="Filter by topic (e.g. 'Strings', 'Arrays & Lists', 'Hash Maps & Arrays')"),
+    category: Optional[str] = Query(None, description="Filter by category"),
     subject: Optional[str] = Query(None, description="Filter by subject"),
 ):
     """
-    Retrieve challenges with optional filtering by category, difficulty, or subject.
+    Retrieve challenges from challenges.json with optional filtering by difficulty and topic.
+    Returns structured JSON and never exposes hidden solutions.
     """
-    raw_challenges = db.get_all_challenges(category=category, difficulty=difficulty, subject=subject)
+    raw_challenges = db.get_all_challenges(category=category, difficulty=difficulty, subject=subject, topic=topic)
     return [ChallengeBase(**c) for c in raw_challenges]
 
 
 @router.get("/{challenge_id}", response_model=Challenge, summary="Get challenge details")
 def get_challenge(challenge_id: str):
     """
-    Retrieve full challenge details including starter code, hints, and test cases.
+    Retrieve full challenge details including starter code, constraints, and public test cases.
+    Returns 404 for unknown challenge IDs.
+    Never exposes hidden solutions or hidden test cases.
     """
     challenge = db.get_challenge_by_id(challenge_id)
     if not challenge:

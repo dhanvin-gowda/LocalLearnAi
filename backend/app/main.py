@@ -7,6 +7,8 @@ from fastapi.exceptions import RequestValidationError
 
 from app.config import get_settings
 from app.routes import api_router
+from app.routes.challenges import router as challenges_router
+from app.routes.tutor import router as tutor_router
 
 # Configure logging
 logging.basicConfig(
@@ -39,12 +41,13 @@ app.add_middleware(
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     logger.warning(f"Validation error on {request.url.path}: {exc.errors()}")
+    from fastapi.encoders import jsonable_encoder
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         content={
             "success": False,
             "error": "Validation Error",
-            "details": exc.errors(),
+            "details": jsonable_encoder(exc.errors()),
         },
     )
 
@@ -88,7 +91,9 @@ def root():
 
 
 # Register all API endpoints
-app.include_router(api_router)
+app.include_router(challenges_router)  # Direct /challenges endpoints
+app.include_router(tutor_router)       # Direct /tutor endpoints
+app.include_router(api_router)         # Versioned /api/v1 endpoints
 
 
 if __name__ == "__main__":
