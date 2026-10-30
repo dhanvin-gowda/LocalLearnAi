@@ -67,7 +67,12 @@ class ReviewService:
                 problem_context=request.problem_context,
             )
             llm_review = await gemma_service.generate(prompt)
-            summary = llm_review[:200]
+            if llm_review:
+                summary = llm_review[:200]
+            elif not issues:
+                summary = "Code passes syntax checks with clean structure! No syntax issues detected."
+            else:
+                summary = f"Code analysis identified {len(issues)} area(s) for improvement."
         else:
             if not issues:
                 summary = "Code passes syntax checks with clean structure! No syntax issues detected."

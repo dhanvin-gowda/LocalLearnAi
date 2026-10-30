@@ -1,6 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
-from typing import List, Union
+from typing import List, Optional, Union
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -16,9 +16,13 @@ class Settings(BaseSettings):
     cors_origins: Union[List[str], str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3001",
     ]
 
-    # Gemma / LLM service configs
+    # Gemma / Gemini LLM service configs
+    gemini_api_key: Optional[str] = None
+    gemma_model: str = "gemma-4-26b-a4b-it"
     gemma_api_base_url: str = "http://localhost:11434"
     gemma_model_name: str = "gemma:2b"
     gemma_timeout_seconds: int = 60
