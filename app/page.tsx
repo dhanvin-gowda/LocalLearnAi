@@ -34,7 +34,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
+import { AnimatedAIChat } from "@/components/chat";
 
 const sidebarVariants = {
   open: {
@@ -81,7 +82,12 @@ const staggerVariants = {
 };
 
 
-export function SessionNavBar() {
+interface SessionNavBarProps {
+  activeView?: string | null;
+  onSelectView?: (view: string) => void;
+}
+
+export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps = {}) {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const pathname = usePathname();
   return (
@@ -97,7 +103,7 @@ export function SessionNavBar() {
       onMouseLeave={() => setIsCollapsed(true)}
     >
       <motion.div
-        className={`relative z-40 flex text-muted-foreground h-full shrink-0 flex-col bg-white dark:bg-black transition-all`}
+        className={`relative z-40 flex text-muted-foreground h-full shrink-0 flex-col bg-black transition-all font-bold`}
         variants={contentVariants}
       >
         <motion.ul variants={staggerVariants} className="flex h-full flex-col">
@@ -109,7 +115,7 @@ export function SessionNavBar() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="flex w-fit items-center gap-2  px-2" 
+                      className="flex w-fit items-center gap-2  px-2"
                     >
                       <Avatar className='rounded size-4'>
                         <AvatarFallback>O</AvatarFallback>
@@ -120,8 +126,8 @@ export function SessionNavBar() {
                       >
                         {!isCollapsed && (
                           <>
-                            <p className="text-sm font-medium  ">
-                              {"Organization"}
+                            <p className="text-sm font-bold  ">
+                              {"Local Learn Ai"}
                             </p>
                             <ChevronsUpDown className="h-4 w-4 text-muted-foreground/50" />
                           </>
@@ -169,13 +175,13 @@ export function SessionNavBar() {
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
                         pathname?.includes("dashboard") &&
-                          "bg-muted text-blue-600",
+                        "bg-muted text-blue-600",
                       )}
                     >
                       <LayoutDashboard className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">Dashboard</p>
+                          <p className="ml-2 text-sm font-bold">Dashboard</p>
                         )}
                       </motion.li>
                     </Link>
@@ -185,14 +191,14 @@ export function SessionNavBar() {
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary",
 
                         pathname?.includes("reports") &&
-                          "bg-muted text-blue-600",
+                        "bg-muted text-blue-600",
                       )}
                     >
                       <FileClock className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
                           <div className="flex items-center gap-2">
-                            <p className="ml-2 text-sm font-medium">Reports</p>
+                            <p className="ml-2 text-sm font-bold">Reports</p>
                           </div>
                         )}
                       </motion.li>
@@ -200,15 +206,19 @@ export function SessionNavBar() {
                     <Link
                       href="/chat"
                       className={cn(
-                        "flex h-8 flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary",
-                        pathname?.includes("chat") && "bg-muted text-blue-600",
+                        "flex h-8 flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary cursor-pointer",
+                        (activeView === "chat" || pathname?.includes("chat")) && "bg-muted text-blue-600",
                       )}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onSelectView?.("chat");
+                      }}
                     >
                       <MessagesSquare className="h-4 w-4" />
                       <motion.li variants={variants}>
                         {!isCollapsed && (
                           <div className="ml-2 flex items-center  gap-2">
-                            <p className="text-sm font-medium">Chat</p>
+                            <p className="text-sm font-bold">Chat</p>
                             <Badge
                               className={cn(
                                 "flex h-fit w-fit items-center gap-1.5 rounded border-none bg-blue-50 px-1.5 text-blue-600 dark:bg-blue-700 dark:text-blue-300",
@@ -233,7 +243,7 @@ export function SessionNavBar() {
                       <Layout className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">Deals</p>
+                          <p className="ml-2 text-sm font-bold">Deals</p>
                         )}
                       </motion.li>
                     </Link>
@@ -243,13 +253,13 @@ export function SessionNavBar() {
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
 
                         pathname?.includes("accounts") &&
-                          "bg-muted text-blue-600",
+                        "bg-muted text-blue-600",
                       )}
                     >
                       <UserCircle className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">Accounts</p>
+                          <p className="ml-2 text-sm font-bold">Accounts</p>
                         )}
                       </motion.li>
                     </Link>
@@ -259,13 +269,13 @@ export function SessionNavBar() {
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
 
                         pathname?.includes("competitors") &&
-                          "bg-muted text-blue-600",
+                        "bg-muted text-blue-600",
                       )}
                     >
                       <UserSearch className="h-4 w-4" />
                       <motion.li variants={variants}>
                         {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">
+                          <p className="ml-2 text-sm font-bold">
                             Competitors
                           </p>
                         )}
@@ -278,13 +288,13 @@ export function SessionNavBar() {
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
 
                         pathname?.includes("library") &&
-                          "bg-muted text-blue-600",
+                        "bg-muted text-blue-600",
                       )}
                     >
                       <GraduationCap className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">
+                          <p className="ml-2 text-sm font-bold">
                             Knowledge Base
                           </p>
                         )}
@@ -295,13 +305,13 @@ export function SessionNavBar() {
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
                         pathname?.includes("feedback") &&
-                          "bg-muted text-blue-600",
+                        "bg-muted text-blue-600",
                       )}
                     >
                       <MessageSquareText className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">Feedback</p>
+                          <p className="ml-2 text-sm font-bold">Feedback</p>
                         )}
                       </motion.li>
                     </Link>
@@ -311,13 +321,13 @@ export function SessionNavBar() {
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
 
                         pathname?.includes("review") &&
-                          "bg-muted text-blue-600",
+                        "bg-muted text-blue-600",
                       )}
                     >
                       <FileClock className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
                         {!isCollapsed && (
-                          <p className="ml-2 text-sm font-medium">
+                          <p className="ml-2 text-sm font-bold">
                             Document Review
                           </p>
                         )}
@@ -334,7 +344,7 @@ export function SessionNavBar() {
                   <Settings className="h-4 w-4 shrink-0" />{" "}
                   <motion.li variants={variants}>
                     {!isCollapsed && (
-                      <p className="ml-2 text-sm font-medium"> Settings</p>
+                      <p className="ml-2 text-sm font-bold"> Settings</p>
                     )}
                   </motion.li>
                 </Link>
@@ -353,7 +363,7 @@ export function SessionNavBar() {
                         >
                           {!isCollapsed && (
                             <>
-                              <p className="text-sm font-medium">Account</p>
+                              <p className="text-sm font-bold">Account</p>
                               <ChevronsUpDown className="ml-auto h-4 w-4 text-muted-foreground/50" />
                             </>
                           )}
@@ -368,7 +378,7 @@ export function SessionNavBar() {
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col text-left">
-                          <span className="text-sm font-medium">
+                          <span className="text-sm font-bold">
                             {`Andrew Luo`}
                           </span>
                           <span className="line-clamp-1 text-xs text-muted-foreground">
@@ -402,4 +412,15 @@ export function SessionNavBar() {
   );
 }
 
-export default SessionNavBar;
+export default function Page({ initialView = null }: { initialView?: string | null }) {
+  const [activeView, setActiveView] = useState<string | null>(initialView);
+
+  return (
+    <div className="flex min-h-screen w-full bg-black text-white relative">
+      <SessionNavBar activeView={activeView} onSelectView={setActiveView} />
+      <main className="flex-1 w-full pl-[3.05rem] min-h-screen flex items-center justify-center relative z-10">
+        {activeView === "chat" && <AnimatedAIChat />}
+      </main>
+    </div>
+  );
+}
