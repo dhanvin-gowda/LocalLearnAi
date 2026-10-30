@@ -19,12 +19,13 @@ import {
   UserCircle,
   UserCog,
   UserSearch,
+  Users,
 } from "lucide-react";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -36,6 +37,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AnimatedAIChat } from "@/components/chat";
+import { Dashboard } from "@/components/dashboard";
+import { FriendsChat } from "@/components/friends-chat";
 
 const sidebarVariants = {
   open: {
@@ -89,7 +92,15 @@ interface SessionNavBarProps {
 
 export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps = {}) {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [currentUser, setCurrentUser] = useState<{ displayName: string; username: string; initials?: string } | null>(null);
   const pathname = usePathname();
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("chat_user");
+      if (raw) setCurrentUser(JSON.parse(raw));
+    } catch {}
+  }, []);
   return (
     <motion.div
       className={cn(
@@ -173,10 +184,14 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     <Link
                       href="/dashboard"
                       className={cn(
-                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
-                        pathname?.includes("dashboard") &&
+                        "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary cursor-pointer",
+                        (activeView === "dashboard" || (!activeView && pathname?.includes("dashboard"))) &&
                         "bg-muted text-blue-600",
                       )}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onSelectView?.("dashboard");
+                      }}
                     >
                       <LayoutDashboard className="h-4 w-4" />{" "}
                       <motion.li variants={variants}>
@@ -227,6 +242,27 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                             >
                               BETA
                             </Badge>
+                          </div>
+                        )}
+                      </motion.li>
+                    </Link>
+                    <Link
+                      href="/friends"
+                      className={cn(
+                        "flex h-8 flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary cursor-pointer",
+                        (activeView === "friends" || pathname?.includes("friends")) && "bg-muted text-blue-600",
+                      )}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onSelectView?.("friends");
+                      }}
+                    >
+                      <Users className="h-4 w-4" />
+                      <motion.li variants={variants}>
+                        {!isCollapsed && (
+                          <div className="ml-2 flex items-center gap-2">
+                            <p className="text-sm font-bold">Friends Chat</p>
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                           </div>
                         )}
                       </motion.li>
@@ -374,29 +410,26 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                       <div className="flex flex-row items-center gap-2 p-2">
                         <Avatar className="size-6">
                           <AvatarFallback>
-                            AL
+                            {currentUser?.initials || "U"}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col text-left">
                           <span className="text-sm font-bold">
-                            {`Andrew Luo`}
+                            {currentUser?.displayName || "LocalLearn User"}
                           </span>
                           <span className="line-clamp-1 text-xs text-muted-foreground">
-                            {`andrew@usehindsight.com`}
+                            {currentUser ? `@${currentUser.username}` : "Logged in via JWT"}
                           </span>
                         </div>
                       </div>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
-                        asChild
-                        className="flex items-center gap-2"
-                      >
-                        <Link href="/settings/profile">
-                          <UserCircle className="h-4 w-4" /> Profile
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="flex items-center gap-2"
+                        onClick={() => {
+                          localStorage.removeItem("chat_jwt");
+                          localStorage.removeItem("chat_user");
+                          window.location.reload();
+                        }}
+                        className="flex items-center gap-2 cursor-pointer text-rose-400 hover:text-rose-300"
                       >
                         <LogOut className="h-4 w-4" /> Sign out
                       </DropdownMenuItem>
@@ -412,14 +445,20 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
   );
 }
 
-export default function Page({ initialView = null }: { initialView?: string | null }) {
+export default function Page({ initialView = "dashboard" }: { initialView?: string | null }) {
   const [activeView, setActiveView] = useState<string | null>(initialView);
 
   return (
     <div className="flex min-h-screen w-full bg-black text-white relative">
       <SessionNavBar activeView={activeView} onSelectView={setActiveView} />
-      <main className="flex-1 w-full pl-[3.05rem] min-h-screen flex items-center justify-center relative z-10">
-        {activeView === "chat" && <AnimatedAIChat />}
+      <main className="flex-1 w-full pl-[3.05rem] min-h-screen relative z-10 overflow-y-auto">
+        {activeView === "dashboard" && <Dashboard />}
+        {activeView === "chat" && (
+          <div className="w-full min-h-screen flex items-center justify-center">
+            <AnimatedAIChat />
+          </div>
+        )}
+        {activeView === "friends" && <FriendsChat />}
       </main>
     </div>
   );

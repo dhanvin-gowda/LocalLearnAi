@@ -1,0 +1,107 @@
+{
+  "users": {
+    "usr_aarav": {
+      "id": "usr_aarav",
+      "username": "aarav",
+      "displayName": "Aarav Patel",
+      "passwordHash": "ccac8c1d77795d7db2ae1effbaf30f51:432a6c062d65c4733d662a784434fc0be3a6529c18bcf41ea2dadb4284bd0a2217deca1b3cef38eaf9ff75b9474ac45a2374da09767df89b9a532f3bf3189594",
+      "avatarColor": "bg-emerald-600/30 text-emerald-400 border-emerald-500/40",
+      "initials": "AP",
+      "createdAt": 1793306666059,
+      "lastSeenAt": 1793396489223
+    },
+    "usr_priya": {
+      "id": "usr_priya",
+      "username": "priya",
+      "displayName": "Priya Sharma",
+      "passwordHash": "1246e9549eeb4120b9f054d50499b282:eb13d268f43116c1ec6d4aaf3a8fc45a3465e65848c772534ba1c2005f7a085c33f5bf3b503b986029ddb31fa6fa7b0a61018d6ad768e7f10311d42e12adb7af",
+      "avatarColor": "bg-purple-600/30 text-purple-400 border-purple-500/40",
+      "initials": "PS",
+      "createdAt": 1793306666115,
+      "lastSeenAt": 1793393066115
+    },
+    "usr_rahul": {
+      "id": "usr_rahul",
+      "username": "rahul",
+      "displayName": "Rahul Verma",
+      "passwordHash": "290972c22fb9e1cf8ef8673b19ff9880:837c9a864819e5d7a8a0653ed53dd27abe590c71d7bd81cf84f6368cf15e01766521f1205125e0f924704b87b862552f8293517ece2b09feb04068bb27e52a5b",
+      "avatarColor": "bg-amber-600/30 text-amber-400 border-amber-500/40",
+      "initials": "RV",
+      "createdAt": 1793306666181,
+      "lastSeenAt": 1793393066181
+    },
+    "usr_1793393447023_8339d7": {
+      "id": "usr_1793393447023_8339d7",
+      "username": "alice_1793393447023",
+      "displayName": "Alice Wonder",
+      "passwordHash": "4bd4eca312549fa42c7d3928af0db4e1:d082bd89bbd8b700dda616a3ff20bf710e6eece381401977405eaa0540a7b1a356060429762a4b60dbbc8fc110442d5c20880ab3343e46ab2c0f93cb37caf498",
+      "avatarColor": "bg-rose-600/30 text-rose-400 border-rose-500/40",
+      "initials": "AW",
+      "createdAt": 1793393447071,
+      "lastSeenAt": 1793393447173
+    },
+    "usr_1793393447072_830383": {
+      "id": "usr_1793393447072_830383",
+      "username": "bob_1793393447023",
+      "displayName": "Bob Builder",
+      "passwordHash": "d67455714f26d015826eff506f2a2970:6d1c781cb79636664121e380b73438193a88d5dd553fad6db4811d0c122e8d89979fadfc5693b8ff9c2324299d4cf5470f8821407d6e16e4ead0bffbe9fd3e2b",
+      "avatarColor": "bg-amber-600/30 text-amber-400 border-amber-500/40",
+      "initials": "BB",
+      "createdAt": 1793393447123,
+      "lastSeenAt": 1793393447123
+    }
+  },
+  "friendRequests": {
+    "req_1793393447179_024402": {
+      "id": "req_1793393447179_024402",
+      "fromUserId": "usr_1793393447023_8339d7",
+      "toUserId": "usr_1793393447072_830383",
+      "status": "accepted",
+      "createdAt": 1793393447179,
+      "updatedAt": 1793393447182
+    }
+  },
+  "friendships": {
+    "frnd_aarav_priya": {
+      "id": "frnd_aarav_priya",
+      "user1Id": "usr_aarav",
+      "user2Id": "usr_priya",
+      "createdAt": 1793389466181
+    },
+    "frnd_usr_1793393447023_8339d7_usr_1793393447072_830383": {
+      "id": "frnd_usr_1793393447023_8339d7_usr_1793393447072_830383",
+      "user1Id": "usr_1793393447023_8339d7",
+      "user2Id": "usr_1793393447072_830383",
+      "createdAt": 1793393447182
+    }
+  },
+  "messages": {
+    "msg_seed_1": {
+      "id": "msg_seed_1",
+      "conversationId": "usr_aarav::usr_priya",
+      "senderId": "usr_aarav",
+      "recipientId": "usr_priya",
+      "text": "Hey Priya! Welcome to the new real-time chat.",
+      "createdAt": 1793391266182,
+      "readAt": 1793391366182
+    },
+    "msg_seed_2": {
+      "id": "msg_seed_2",
+      "conversationId": "usr_aarav::usr_priya",
+      "senderId": "usr_priya",
+      "recipientId": "usr_aarav",
+      "text": "Hi Aarav! Love the instant messaging and typing indicators! 🚀",
+      "createdAt": 1793392166182,
+      "readAt": 1793392266182
+    },
+    "msg_1793393447185_3c80fa": {
+      "id": "msg_1793393447185_3c80fa",
+      "conversationId": "usr_1793393447023_8339d7::usr_1793393447072_830383",
+      "senderId": "usr_1793393447023_8339d7",
+      "recipientId": "usr_1793393447072_830383",
+      "text": "Hey Bob! This is our instant chat!",
+      "createdAt": 1793393447185,
+      "readAt": 1793393447226
+    }
+  }
+}
