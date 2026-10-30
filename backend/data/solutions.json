@@ -1,0 +1,213 @@
+[
+  {
+    "challenge_id": "py-beg-01-reverse-string",
+    "entrypoint": "reverse_string",
+    "time_complexity": "O(N)",
+    "space_complexity": "O(N)",
+    "solution_code": "def reverse_string(s: str) -> str:\n    return s[::-1]\n",
+    "explanation": "Python's slice notation s[::-1] creates a new reversed string in linear O(N) time with minimal overhead.",
+    "hidden_test_cases": [
+      {
+        "input": {
+          "s": "racecar"
+        },
+        "expected": "racecar"
+      },
+      {
+        "input": {
+          "s": "Hello, World!"
+        },
+        "expected": "!dlroW ,olleH"
+      },
+      {
+        "input": {
+          "s": "   spaces   "
+        },
+        "expected": "   secaps   "
+      },
+      {
+        "input": {
+          "s": "1234567890"
+        },
+        "expected": "0987654321"
+      },
+      {
+        "input": {
+          "s": "z"
+        },
+        "expected": "z"
+      }
+    ]
+  },
+  {
+    "challenge_id": "py-beg-02-find-largest",
+    "entrypoint": "find_largest",
+    "time_complexity": "O(N)",
+    "space_complexity": "O(1)",
+    "solution_code": "def find_largest(nums: list[int]) -> int:\n    largest = nums[0]\n    for num in nums[1:]:\n        if num > largest:\n            largest = num\n    return largest\n",
+    "explanation": "Initialize largest with the first element nums[0], then iterate through the remaining elements updating largest whenever a greater number is found. This correctly handles lists containing entirely negative numbers in O(N) time and O(1) space.",
+    "hidden_test_cases": [
+      {
+        "input": {
+          "nums": [8, 8, 8, 8]
+        },
+        "expected": 8
+      },
+      {
+        "input": {
+          "nums": [1, 2, 3, 4, 5, 10]
+        },
+        "expected": 10
+      },
+      {
+        "input": {
+          "nums": [10, 5, 4, 3, 2, 1]
+        },
+        "expected": 10
+      },
+      {
+        "input": {
+          "nums": [-1000000000, 0, 1000000000]
+        },
+        "expected": 1000000000
+      },
+      {
+        "input": {
+          "nums": [-50, -60]
+        },
+        "expected": -50
+      }
+    ]
+  },
+  {
+    "challenge_id": "py-beg-03-palindrome-check",
+    "entrypoint": "is_palindrome",
+    "time_complexity": "O(N)",
+    "space_complexity": "O(N)",
+    "solution_code": "def is_palindrome(s: str) -> bool:\n    cleaned = [c.lower() for c in s if c.isalnum()]\n    return cleaned == cleaned[::-1]\n",
+    "explanation": "Filter characters with c.isalnum() and convert to lowercase with c.lower(). Comparing the resulting list to its reverse verifies palindromicity in O(N) time.",
+    "hidden_test_cases": [
+      {
+        "input": {
+          "s": ""
+        },
+        "expected": true
+      },
+      {
+        "input": {
+          "s": ".,; :!?-"
+        },
+        "expected": true
+      },
+      {
+        "input": {
+          "s": "X"
+        },
+        "expected": true
+      },
+      {
+        "input": {
+          "s": "12321"
+        },
+        "expected": true
+      },
+      {
+        "input": {
+          "s": "ab21ba"
+        },
+        "expected": false
+      },
+      {
+        "input": {
+          "s": "Madam, I'm Adam"
+        },
+        "expected": true
+      }
+    ]
+  },
+  {
+    "challenge_id": "py-beg-04-find-duplicates",
+    "entrypoint": "find_duplicates",
+    "time_complexity": "O(N log K)",
+    "space_complexity": "O(N)",
+    "solution_code": "def find_duplicates(nums: list[int]) -> list[int]:\n    seen = set()\n    duplicates = set()\n    for num in nums:\n        if num in seen:\n            duplicates.add(num)\n        else:\n            seen.add(num)\n    return sorted(list(duplicates))\n",
+    "explanation": "Use a seen set to record elements encountered and a duplicates set to collect elements seen more than once. Sorting the unique duplicates yields the desired ascending output in O(N log K) time, where K is the number of distinct duplicates.",
+    "hidden_test_cases": [
+      {
+        "input": {
+          "nums": [5, 5, 5, 5]
+        },
+        "expected": [5]
+      },
+      {
+        "input": {
+          "nums": [-1, -2, -1, -3, -2]
+        },
+        "expected": [-2, -1]
+      },
+      {
+        "input": {
+          "nums": []
+        },
+        "expected": []
+      },
+      {
+        "input": {
+          "nums": [9]
+        },
+        "expected": []
+      },
+      {
+        "input": {
+          "nums": [9, 2, 5, 2, 9, 1, 5]
+        },
+        "expected": [2, 5, 9]
+      }
+    ]
+  },
+  {
+    "challenge_id": "py-beg-05-two-sum",
+    "entrypoint": "two_sum",
+    "time_complexity": "O(N)",
+    "space_complexity": "O(N)",
+    "solution_code": "def two_sum(nums: list[int], target: int) -> list[int]:\n    lookup = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in lookup:\n            return [lookup[complement], i]\n        lookup[num] = i\n    return []\n",
+    "explanation": "Iterate through the array maintaining a hash map of value -> index. For each number, check if target - num exists in the map. If found, return [lookup[complement], current_index]. This runs in optimal O(N) time and O(N) space.",
+    "hidden_test_cases": [
+      {
+        "input": {
+          "nums": [-1, -2, -3, -4, -5],
+          "target": -8
+        },
+        "expected": [2, 4]
+      },
+      {
+        "input": {
+          "nums": [-5, 5],
+          "target": 0
+        },
+        "expected": [0, 1]
+      },
+      {
+        "input": {
+          "nums": [1, 5, 8, 12, 20, 99],
+          "target": 100
+        },
+        "expected": [0, 5]
+      },
+      {
+        "input": {
+          "nums": [0, 4, 3, 0],
+          "target": 0
+        },
+        "expected": [0, 3]
+      },
+      {
+        "input": {
+          "nums": [10, 20, 30, 40, 75, 80],
+          "target": 85
+        },
+        "expected": [0, 4]
+      }
+    ]
+  }
+]

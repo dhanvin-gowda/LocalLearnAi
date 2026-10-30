@@ -1,0 +1,15 @@
+{
+  "VKJURxbYTQ": {
+    "id": "VKJURxbYTQ",
+    "createdAt": 1793391646221,
+    "messages": [
+      {
+        "id": "sys_init",
+        "sender": "System",
+        "text": "Room created! Share this link with your friend to chat privately in real-time.",
+        "timestamp": "01:50 am",
+        "createdAt": 1793391646340
+      }
+    ]
+  }
+}
