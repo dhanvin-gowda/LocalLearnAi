@@ -75,3 +75,6 @@ class TutorQueryResponse(BaseModel):
     suggested_followups: List[str] = Field(default_factory=list, description="Followup question prompts")
     challenge_id: Optional[str] = None
     subject: Optional[str] = "Python / DSA"
+    model: Optional[str] = Field("Gemini / Gemma", description="Name of LLM provider that generated the response")
+    is_offline: Optional[bool] = Field(False, description="Whether the response was generated locally / offline via Ollama")
+

@@ -11,5 +11,39 @@
         "createdAt": 1793391646340
       }
     ]
+  },
+  "ODIJ7b4L5m": {
+    "id": "ODIJ7b4L5m",
+    "createdAt": 1793407405680,
+    "messages": [
+      {
+        "id": "sys_init",
+        "sender": "System",
+        "text": "Room created! Share this link with your friend to chat privately in real-time.",
+        "timestamp": "06:13 am",
+        "createdAt": 1793407405680
+      },
+      {
+        "id": "msg_1793407451392_erda",
+        "sender": "sbb",
+        "text": "hiii",
+        "timestamp": "06:14 am",
+        "createdAt": 1793407451392
+      },
+      {
+        "id": "msg_1793407461681_t37a",
+        "sender": "sbb",
+        "text": "how are you",
+        "timestamp": "06:14 am",
+        "createdAt": 1793407461681
+      },
+      {
+        "id": "msg_1793407470964_iti9",
+        "sender": "dhanvin",
+        "text": "fuck you",
+        "timestamp": "06:14 am",
+        "createdAt": 1793407470964
+      }
+    ]
   }
 }

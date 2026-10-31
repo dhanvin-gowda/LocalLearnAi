@@ -8,7 +8,7 @@
       "avatarColor": "bg-emerald-600/30 text-emerald-400 border-emerald-500/40",
       "initials": "AP",
       "createdAt": 1793318168399,
-      "lastSeenAt": 1793404568399
+      "lastSeenAt": 1793407069858
     },
     "usr_priya": {
       "id": "usr_priya",
@@ -58,6 +58,15 @@
       "text": "Hi Aarav! Love the instant messaging and typing indicators! 🚀",
       "createdAt": 1793403668484,
       "readAt": 1793403768484
+    },
+    "msg_1793407075755_4e5686": {
+      "id": "msg_1793407075755_4e5686",
+      "conversationId": "usr_aarav::usr_priya",
+      "senderId": "usr_aarav",
+      "recipientId": "usr_priya",
+      "text": "hi",
+      "createdAt": 1793407075760,
+      "readAt": null
     }
   }
 }
