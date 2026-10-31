@@ -96,6 +96,20 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
   const [currentUser, setCurrentUser] = useState<{ displayName: string; username: string; initials?: string } | null>(null);
   const pathname = usePathname();
 
+  const currentActive =
+    activeView ||
+    (pathname === "/chat" || pathname?.startsWith("/chat/")
+      ? "chat"
+      : pathname === "/friends" || pathname?.startsWith("/friends/")
+      ? "friends"
+      : pathname?.startsWith("/challenges")
+      ? "challenges"
+      : pathname?.startsWith("/reports")
+      ? "reports"
+      : pathname === "/dashboard" || pathname === "/" || pathname?.startsWith("/dashboard/")
+      ? "dashboard"
+      : null);
+
   useEffect(() => {
     try {
       const raw = localStorage.getItem("chat_user");
@@ -184,13 +198,12 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                   <div className={cn("flex w-full flex-col gap-1")}>
                     <Link
                       href="/dashboard"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary cursor-pointer",
-                        (activeView === "dashboard" || (!activeView && pathname?.includes("dashboard"))) &&
-                        "bg-muted text-blue-600",
+                        currentActive === "dashboard" && "bg-muted text-blue-600",
                       )}
-                      onClick={(e) => {
-                        e.preventDefault();
+                      onClick={() => {
                         onSelectView?.("dashboard");
                       }}
                     >
@@ -203,9 +216,10 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     </Link>
                     <Link
                       href="/challenges"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary",
-                        pathname?.includes("challenges") && "bg-muted text-blue-600",
+                        currentActive === "challenges" && "bg-muted text-blue-600",
                       )}
                     >
                       <Trophy className="h-4 w-4" />{" "}
@@ -219,11 +233,10 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     </Link>
                     <Link
                       href="/reports"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary",
-
-                        pathname?.includes("reports") &&
-                        "bg-muted text-blue-600",
+                        currentActive === "reports" && "bg-muted text-blue-600",
                       )}
                     >
                       <FileClock className="h-4 w-4" />{" "}
@@ -237,12 +250,12 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     </Link>
                     <Link
                       href="/chat"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary cursor-pointer",
-                        (activeView === "chat" || pathname?.includes("chat")) && "bg-muted text-blue-600",
+                        currentActive === "chat" && "bg-muted text-blue-600",
                       )}
-                      onClick={(e) => {
-                        e.preventDefault();
+                      onClick={() => {
                         onSelectView?.("chat");
                       }}
                     >
@@ -265,12 +278,12 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     </Link>
                     <Link
                       href="/friends"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 flex-row items-center rounded-md px-2 py-1.5 transition hover:bg-muted hover:text-primary cursor-pointer",
-                        (activeView === "friends" || pathname?.includes("friends")) && "bg-muted text-blue-600",
+                        currentActive === "friends" && "bg-muted text-blue-600",
                       )}
-                      onClick={(e) => {
-                        e.preventDefault();
+                      onClick={() => {
                         onSelectView?.("friends");
                       }}
                     >
@@ -287,6 +300,7 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     <Separator className="w-full" />
                     <Link
                       href="/deals"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
 
@@ -302,6 +316,7 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     </Link>
                     <Link
                       href="/accounts"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
 
@@ -318,6 +333,7 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     </Link>
                     <Link
                       href="/competitors"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
 
@@ -337,6 +353,7 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     <Separator className="w-full" />
                     <Link
                       href="/library/knowledge"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
 
@@ -355,6 +372,7 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     </Link>
                     <Link
                       href="/feedback"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
                         pathname?.includes("feedback") &&
@@ -370,6 +388,7 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
                     </Link>
                     <Link
                       href="/review"
+                      prefetch={false}
                       className={cn(
                         "flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary",
 
@@ -392,6 +411,7 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
               <div className="flex flex-col p-2">
                 <Link
                   href="/settings/integrations"
+                  prefetch={false}
                   className="mt-auto flex h-8 w-full flex-row items-center rounded-md px-2 py-1.5   transition hover:bg-muted hover:text-primary"
                 >
                   <Settings className="h-4 w-4 shrink-0" />{" "}
@@ -463,19 +483,36 @@ export function SessionNavBar({ activeView, onSelectView }: SessionNavBarProps =
 }
 
 export default function Page({ initialView = "dashboard" }: { initialView?: string | null }) {
-  const [activeView, setActiveView] = useState<string | null>(initialView);
+  const pathname = usePathname();
+
+  const resolvedView =
+    pathname === "/chat" || pathname?.startsWith("/chat/")
+      ? "chat"
+      : pathname === "/friends" || pathname?.startsWith("/friends/")
+      ? "friends"
+      : pathname === "/dashboard" || pathname?.startsWith("/dashboard/")
+      ? "dashboard"
+      : initialView || "dashboard";
+
+  const [activeView, setActiveView] = useState<string | null>(resolvedView);
+
+  useEffect(() => {
+    setActiveView(resolvedView);
+  }, [resolvedView]);
+
+  const viewToRender = activeView || resolvedView;
 
   return (
     <div className="flex min-h-screen w-full bg-black text-white relative">
-      <SessionNavBar activeView={activeView} onSelectView={setActiveView} />
+      <SessionNavBar activeView={viewToRender} onSelectView={setActiveView} />
       <main className="flex-1 w-full pl-[3.05rem] min-h-screen relative z-10 overflow-y-auto">
-        {activeView === "dashboard" && <Dashboard />}
-        {activeView === "chat" && (
+        {viewToRender === "dashboard" && <Dashboard />}
+        {viewToRender === "chat" && (
           <div className="w-full min-h-screen flex items-center justify-center">
             <AnimatedAIChat />
           </div>
         )}
-        {activeView === "friends" && <FriendsChat />}
+        {viewToRender === "friends" && <FriendsChat />}
       </main>
     </div>
   );

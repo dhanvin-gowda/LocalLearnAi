@@ -4,31 +4,31 @@
       "id": "usr_aarav",
       "username": "aarav",
       "displayName": "Aarav Patel",
-      "passwordHash": "d0e169ef9f579710fabf79c6ab72b53e:1b52eeb90868c29a565f752dc9de8657fceac5e1b821d28b92dd0a2c65ce7b3adffc9bde5b70a3cd73c6e7bafd44031d9d7cec7a6ffa5360f78f764395af4181",
+      "passwordHash": "1833e1a233bd52695fe2cd18b86b1767:494087a1cb396a57a895c43c22074fc01c65f9bd34e491227483d61c5787938fbfbb2c8169849abbc763c9ff9cb53af81d38e2b4178aee238578a2013d0fefe1",
       "avatarColor": "bg-emerald-600/30 text-emerald-400 border-emerald-500/40",
       "initials": "AP",
-      "createdAt": 1793313714503,
-      "lastSeenAt": 1793400114503
+      "createdAt": 1793318168399,
+      "lastSeenAt": 1793404568399
     },
     "usr_priya": {
       "id": "usr_priya",
       "username": "priya",
       "displayName": "Priya Sharma",
-      "passwordHash": "e9e3ba8f0a8ca4261bc11ebd99709d50:52f3e724bb50dceab14d5dc5e6d983af6bc6e38c174f0995e1c008784a524dcfc94ebc8a34680c04c3421536ce8fd900a89a46d9f04e521d09a52b3aa911a180",
+      "passwordHash": "510be2f2464510f05da2bc831676951f:ba8ce79217e61d2faecf0d34e7fb614dda50daca819a31295e5fda5f95bbe9d34132880028b7d92a8910c1f71b6e53924fd39827eae0eb6bf8b7b93a62398064",
       "avatarColor": "bg-purple-600/30 text-purple-400 border-purple-500/40",
       "initials": "PS",
-      "createdAt": 1793313714567,
-      "lastSeenAt": 1793400114567
+      "createdAt": 1793318168440,
+      "lastSeenAt": 1793404568440
     },
     "usr_rahul": {
       "id": "usr_rahul",
       "username": "rahul",
       "displayName": "Rahul Verma",
-      "passwordHash": "041bbafa3e5d2257e28b447b0ef40eea:139ce40684e07e62ff154632690e62634601f3272b69e86d3983b4289a6cfe3314c2019485244b8db0c69738491313cd822d839bbc5eb8bfaed57dbe890332e4",
+      "passwordHash": "f9425a2fc9029e74858a0823b7e3ab55:fc361f8553344b06c49bcdc2229972b8e2a398118e80f9562044a402ec46b421419d9090d0b7db12ea8264f2181255aff319f5a1b2b22458a3267dc683d0dfda",
       "avatarColor": "bg-amber-600/30 text-amber-400 border-amber-500/40",
       "initials": "RV",
-      "createdAt": 1793313714606,
-      "lastSeenAt": 1793400114606
+      "createdAt": 1793318168484,
+      "lastSeenAt": 1793404568484
     }
   },
   "friendRequests": {},
@@ -37,7 +37,7 @@
       "id": "frnd_aarav_priya",
       "user1Id": "usr_aarav",
       "user2Id": "usr_priya",
-      "createdAt": 1793396514606
+      "createdAt": 1793400968484
     }
   },
   "messages": {
@@ -47,8 +47,8 @@
       "senderId": "usr_aarav",
       "recipientId": "usr_priya",
       "text": "Hey Priya! Welcome to the new real-time chat.",
-      "createdAt": 1793398314607,
-      "readAt": 1793398414607
+      "createdAt": 1793402768484,
+      "readAt": 1793402868484
     },
     "msg_seed_2": {
       "id": "msg_seed_2",
@@ -56,8 +56,8 @@
       "senderId": "usr_priya",
       "recipientId": "usr_aarav",
       "text": "Hi Aarav! Love the instant messaging and typing indicators! 🚀",
-      "createdAt": 1793399214607,
-      "readAt": 1793399314607
+      "createdAt": 1793403668484,
+      "readAt": 1793403768484
     }
   }
 }
