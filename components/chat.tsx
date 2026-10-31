@@ -107,45 +107,45 @@ interface CommandSuggestion {
 }
 
 interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  containerClassName?: string;
-  showRing?: boolean;
+    extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+    containerClassName?: string;
+    showRing?: boolean;
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, containerClassName, showRing = true, ...props }, ref) => {
-    const [isFocused, setIsFocused] = useState(false);
+    ({ className, containerClassName, showRing = true, ...props }, ref) => {
+        const [isFocused, setIsFocused] = useState(false);
 
-    return (
-      <div className={cn("relative", containerClassName)}>
-        <textarea
-          className={cn(
-            "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
-            className
-          )}
-          ref={ref}
-          onFocus={(e) => {
-            setIsFocused(true);
-            props.onFocus?.(e);
-          }}
-          onBlur={(e) => {
-            setIsFocused(false);
-            props.onBlur?.(e);
-          }}
-          {...props}
-        />
-        {showRing && isFocused && (
-          <motion.span 
-            className="absolute inset-0 rounded-md pointer-events-none ring-2 ring-offset-0 ring-violet-500/30"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          />
-        )}
-      </div>
-    );
-  }
+        return (
+            <div className={cn("relative", containerClassName)}>
+                <textarea
+                    className={cn(
+                        "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+                        className
+                    )}
+                    ref={ref}
+                    onFocus={(e) => {
+                        setIsFocused(true);
+                        props.onFocus?.(e);
+                    }}
+                    onBlur={(e) => {
+                        setIsFocused(false);
+                        props.onBlur?.(e);
+                    }}
+                    {...props}
+                />
+                {showRing && isFocused && (
+                    <motion.span
+                        className="absolute inset-0 rounded-md pointer-events-none ring-2 ring-offset-0 ring-violet-500/30"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    />
+                )}
+            </div>
+        );
+    }
 );
 Textarea.displayName = "Textarea";
 
@@ -224,35 +224,35 @@ export function AnimatedAIChat() {
     };
 
     const commandSuggestions: CommandSuggestion[] = [
-        { 
-            icon: <HelpCircle className="w-4 h-4 text-amber-400" />, 
-            label: "Explain Concept", 
-            description: "Explain a Python or DSA concept step-by-step", 
-            prefix: "/explain" 
+        {
+            icon: <HelpCircle className="w-4 h-4 text-amber-400" />,
+            label: "Explain Concept",
+            description: "Explain a Python or DSA concept step-by-step",
+            prefix: "/explain"
         },
-        { 
-            icon: <Terminal className="w-4 h-4 text-emerald-400" />, 
-            label: "Debug Code", 
-            description: "Analyze and troubleshoot code or error messages", 
-            prefix: "/debug" 
+        {
+            icon: <Terminal className="w-4 h-4 text-emerald-400" />,
+            label: "Debug Code",
+            description: "Analyze and troubleshoot code or error messages",
+            prefix: "/debug"
         },
-        { 
-            icon: <Sparkles className="w-4 h-4 text-sky-400" />, 
-            label: "Progressive Hint", 
-            description: "Get a Socratic clue without spoiling the code", 
-            prefix: "/hint" 
+        {
+            icon: <Sparkles className="w-4 h-4 text-sky-400" />,
+            label: "Progressive Hint",
+            description: "Get a Socratic clue without spoiling the code",
+            prefix: "/hint"
         },
-        { 
-            icon: <BookOpen className="w-4 h-4 text-purple-400" />, 
-            label: "Code Review", 
-            description: "Analyze time/space complexity and code quality", 
-            prefix: "/review" 
+        {
+            icon: <BookOpen className="w-4 h-4 text-purple-400" />,
+            label: "Code Review",
+            description: "Analyze time/space complexity and code quality",
+            prefix: "/review"
         },
-        { 
-            icon: <MonitorIcon className="w-4 h-4 text-violet-400" />, 
-            label: "Learning Plan", 
-            description: "Generate a structured topic roadmap", 
-            prefix: "/plan" 
+        {
+            icon: <MonitorIcon className="w-4 h-4 text-violet-400" />,
+            label: "Learning Plan",
+            description: "Generate a structured topic roadmap",
+            prefix: "/plan"
         },
     ];
 
@@ -293,8 +293,8 @@ export function AnimatedAIChat() {
         const handleClickOutside = (event: MouseEvent) => {
             const target = event.target as Node;
             const commandButton = document.querySelector('[data-command-button]');
-            if (commandPaletteRef.current && 
-                !commandPaletteRef.current.contains(target) && 
+            if (commandPaletteRef.current &&
+                !commandPaletteRef.current.contains(target) &&
                 !commandButton?.contains(target)) {
                 setShowCommandPalette(false);
             }
@@ -307,12 +307,12 @@ export function AnimatedAIChat() {
         if (showCommandPalette) {
             if (e.key === 'ArrowDown') {
                 e.preventDefault();
-                setActiveSuggestion(prev => 
+                setActiveSuggestion(prev =>
                     prev < commandSuggestions.length - 1 ? prev + 1 : 0
                 );
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
-                setActiveSuggestion(prev => 
+                setActiveSuggestion(prev =>
                     prev > 0 ? prev - 1 : commandSuggestions.length - 1
                 );
             } else if (e.key === 'Tab' || e.key === 'Enter') {
@@ -458,7 +458,7 @@ export function AnimatedAIChat() {
                                 LocalLearn Gemini AI
                             </h2>
                             <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">
-                                Powered by Gemini
+                                Gemini Online · Ollama Offline Ready
                             </span>
                         </div>
                         <p className="text-[11px] text-white/50">
@@ -500,7 +500,7 @@ export function AnimatedAIChat() {
             <div className="w-full max-w-3xl flex-1 overflow-y-auto py-6 space-y-4 relative z-10 scrollbar-thin">
                 {messages.length === 0 ? (
                     /* Hero Initial State */
-                    <motion.div 
+                    <motion.div
                         className="text-center space-y-8 my-auto py-12"
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -511,7 +511,7 @@ export function AnimatedAIChat() {
                                 <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-white/50 pb-1">
                                     How can I help you code today?
                                 </h1>
-                                <motion.div 
+                                <motion.div
                                     className="h-px bg-gradient-to-r from-transparent via-violet-400/40 to-transparent"
                                     initial={{ width: 0, opacity: 0 }}
                                     animate={{ width: "100%", opacity: 1 }}
@@ -578,9 +578,21 @@ export function AnimatedAIChat() {
                                         )}
                                     >
                                         <div className="flex items-center justify-between gap-4 mb-1.5 pb-1 border-b border-white/[0.06] text-[11px] text-white/50">
-                                            <span className="font-medium text-white/70">
-                                                {isUser ? "You" : msg.model || "Gemini AI"}
-                                            </span>
+                                            <div className="flex items-center gap-1.5 flex-wrap">
+                                                <span className="font-medium text-white/70">
+                                                    {isUser ? "You" : msg.model || "Gemini AI"}
+                                                </span>
+                                                {!isUser && (msg.model?.includes("Ollama") || msg.model?.includes("Offline")) && (
+                                                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                                        Offline / Local
+                                                    </span>
+                                                )}
+                                                {!isUser && (msg.model?.includes("Online") || msg.model?.includes("Gemini")) && !msg.model?.includes("Offline") && (
+                                                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                                        Online
+                                                    </span>
+                                                )}
+                                            </div>
                                             <div className="flex items-center gap-2">
                                                 <span>{msg.timestamp}</span>
                                                 <button
@@ -650,7 +662,7 @@ export function AnimatedAIChat() {
                                     <Sparkles className="h-4 w-4 text-white" />
                                 </div>
                                 <div className="px-4 py-2.5 rounded-2xl rounded-bl-sm backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] flex items-center gap-2 text-xs text-white/70">
-                                    <span>Gemini is thinking</span>
+                                    <span>Thinking</span>
                                     <TypingDots />
                                 </div>
                             </motion.div>
@@ -662,7 +674,7 @@ export function AnimatedAIChat() {
 
             {/* Input Box Docked at Bottom */}
             <div className="w-full max-w-3xl mx-auto relative z-20 pt-2">
-                <motion.div 
+                <motion.div
                     className="relative backdrop-blur-2xl bg-white/[0.03] rounded-2xl border border-white/[0.08] shadow-2xl overflow-visible"
                     initial={{ scale: 0.98 }}
                     animate={{ scale: 1 }}
@@ -670,7 +682,7 @@ export function AnimatedAIChat() {
                     {/* Command Palette Dropdown */}
                     <AnimatePresence>
                         {showCommandPalette && (
-                            <motion.div 
+                            <motion.div
                                 ref={commandPaletteRef}
                                 className="absolute left-4 right-4 bottom-full mb-2 backdrop-blur-xl bg-slate-950/95 rounded-xl z-50 shadow-2xl border border-white/10 overflow-hidden"
                                 initial={{ opacity: 0, y: 5 }}
@@ -684,8 +696,8 @@ export function AnimatedAIChat() {
                                             key={suggestion.prefix}
                                             className={cn(
                                                 "flex items-center justify-between px-3.5 py-2 text-xs transition-colors cursor-pointer",
-                                                activeSuggestion === index 
-                                                    ? "bg-violet-600/30 text-white" 
+                                                activeSuggestion === index
+                                                    ? "bg-violet-600/30 text-white"
                                                     : "text-white/70 hover:bg-white/5"
                                             )}
                                             onClick={() => selectCommandSuggestion(index)}
@@ -751,8 +763,8 @@ export function AnimatedAIChat() {
                                 whileTap={{ scale: 0.94 }}
                                 className={cn(
                                     "px-2.5 py-1 text-xs rounded-lg transition-colors flex items-center gap-1.5 border border-white/[0.08]",
-                                    showCommandPalette 
-                                        ? "bg-violet-600 text-white" 
+                                    showCommandPalette
+                                        ? "bg-violet-600 text-white"
                                         : "bg-white/[0.03] text-white/60 hover:text-white"
                                 )}
                             >
@@ -766,7 +778,7 @@ export function AnimatedAIChat() {
                                 </span>
                             )}
                         </div>
-                        
+
                         <div className="flex items-center gap-3">
                             <span className="hidden sm:inline text-[11px] text-white/30 font-mono">
                                 Enter to send, Shift + Enter for newline
@@ -800,7 +812,7 @@ export function AnimatedAIChat() {
 
             {/* Glowing Mouse Tracker */}
             {inputFocused && (
-                <div 
+                <div
                     ref={mouseGlowRef}
                     className="fixed w-[50rem] h-[50rem] rounded-full pointer-events-none z-0 opacity-[0.02] bg-gradient-to-r from-violet-500 via-fuchsia-500 to-indigo-500 blur-[96px] will-change-transform"
                     style={{
@@ -821,7 +833,7 @@ function TypingDots() {
                     key={dot}
                     className="w-1.5 h-1.5 bg-white/90 rounded-full mx-0.5"
                     initial={{ opacity: 0.3 }}
-                    animate={{ 
+                    animate={{
                         opacity: [0.3, 0.9, 0.3],
                         scale: [0.85, 1.1, 0.85]
                     }}

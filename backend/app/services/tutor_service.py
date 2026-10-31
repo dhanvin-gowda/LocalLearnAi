@@ -47,19 +47,23 @@ class TutorService:
             language=language,
         )
 
-        # 1. Attempt Gemma / Google Gen AI generation
+        # 1. Attempt Gemma / Google Gen AI generation with local Ollama fallback
         llm_response = None
+        llm_meta = {}
         try:
-            llm_response = await gemma_service.generate(
+            llm_meta = await gemma_service.generate_with_meta(
                 prompt=prompt,
                 system_prompt=TUTOR_SYSTEM_PROMPT,
             )
+            llm_response = llm_meta.get("text")
         except Exception as err:
-            logger.error(f"Gemma inference error in tutor service: {err}")
+            logger.error(f"LLM inference error in tutor service: {err}")
 
         # 2. Determine final response text
         if llm_response and llm_response.strip():
             response_text = llm_response.strip()
+            model_used = llm_meta.get("model", "Gemini / Gemma")
+            is_offline = llm_meta.get("is_offline", False)
         else:
             # Pedagogical Socratic fallback engine
             response_text = self._generate_socratic_fallback(
@@ -69,6 +73,8 @@ class TutorService:
                 code=code,
                 language=language,
             )
+            model_used = "LocalLearn AI Engine (Offline)"
+            is_offline = True
 
         # 3. Formulate next action and follow-up prompts
         next_action = self._determine_next_action(message, challenge_id, code, language)
@@ -82,6 +88,8 @@ class TutorService:
             suggested_followups=followups,
             challenge_id=challenge_id,
             subject=request.subject or "Python / DSA",
+            model=model_used,
+            is_offline=is_offline,
         )
 
     def _generate_socratic_fallback(
