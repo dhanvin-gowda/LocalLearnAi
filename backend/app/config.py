@@ -24,8 +24,10 @@ class Settings(BaseSettings):
     gemini_api_key: Optional[str] = None
     gemma_model: str = "gemma-4-26b-a4b-it"
     gemma_api_base_url: str = "http://localhost:11434"
-    gemma_model_name: str = "gemma:2b"
+    gemma_model_name: str = "llama3.2:latest"
     gemma_timeout_seconds: int = 60
+    ollama_base_url: str = "http://localhost:11434"
+    ollama_model: str = "llama3.2:latest"
 
     # Data directory
     data_dir: str = "data"

@@ -24,6 +24,7 @@ import { Challenge, fetchChallenge } from "@/lib/challenges";
 import { SessionNavBar } from "@/app/page";
 import { Button } from "@/components/ui/button";
 import { TutorChatPanel } from "@/components/tutor-chat-panel";
+import { ProgressiveHintPanel } from "@/components/progressive-hint-panel";
 import { cn } from "@/lib/utils";
 
 interface WorkspaceClientProps {
@@ -56,12 +57,8 @@ export default function WorkspaceClient({ id }: WorkspaceClientProps) {
     testResults?: any[];
   } | null>(null);
 
-  // Progressive hints state
-  const [hintTier, setHintTier] = useState<number>(1);
-  const [hintContent, setHintContent] = useState<string | null>(null);
-  const [isLoadingHint, setIsLoadingHint] = useState<boolean>(false);
-
   useEffect(() => {
+
     async function load() {
       setIsLoading(true);
       const res = await fetchChallenge(id);
@@ -123,36 +120,8 @@ export default function WorkspaceClient({ id }: WorkspaceClientProps) {
     }
   };
 
-  const handleRequestHint = async (tier: number) => {
-    setIsLoadingHint(true);
-    setHintTier(tier);
-    try {
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
-      const res = await fetch(`${backendUrl}/hints/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          challenge_id: id,
-          student_code: code,
-          hint_level: tier,
-        }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setHintContent(data.hint);
-      } else {
-        const fallbackHint = challenge?.hints?.[tier - 1] || "Review your base cases and pointers.";
-        setHintContent(fallbackHint);
-      }
-    } catch {
-      const fallbackHint = challenge?.hints?.[tier - 1] || "Review your base cases and pointers.";
-      setHintContent(fallbackHint);
-    } finally {
-      setIsLoadingHint(false);
-    }
-  };
-
   if (isLoading) {
+
     return (
       <div className="flex min-h-screen w-full items-center justify-center bg-black text-white">
         <div className="flex flex-col items-center gap-3">
@@ -391,67 +360,16 @@ export default function WorkspaceClient({ id }: WorkspaceClientProps) {
             )}
 
             {/* Hints Tab Content */}
-            {problemTab === "hints" && (
-              <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 scrollbar-thin">
-                <div className="flex items-center gap-1.5 text-yellow-400 text-xs font-bold uppercase tracking-wider">
-                  <Lightbulb className="h-4 w-4" />
-                  <span>Socratic Hint Levels</span>
-                </div>
-
-                <div className="grid grid-cols-3 gap-1.5">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleRequestHint(1)}
-                    className={cn(
-                      "text-[10px] h-7 px-1 border-white/10",
-                      hintTier === 1 && "border-yellow-400 text-yellow-300 font-bold"
-                    )}
-                  >
-                    Tier 1 (Nudge)
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleRequestHint(2)}
-                    className={cn(
-                      "text-[10px] h-7 px-1 border-white/10",
-                      hintTier === 2 && "border-yellow-400 text-yellow-300 font-bold"
-                    )}
-                  >
-                    Tier 2 (Strategy)
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleRequestHint(3)}
-                    className={cn(
-                      "text-[10px] h-7 px-1 border-white/10",
-                      hintTier === 3 && "border-yellow-400 text-yellow-300 font-bold"
-                    )}
-                  >
-                    Tier 3 (Blueprint)
-                  </Button>
-                </div>
-
-                {isLoadingHint ? (
-                  <div className="flex items-center gap-2 text-xs text-zinc-400 py-3">
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                    <span>Consulting hint engine...</span>
-                  </div>
-                ) : hintContent ? (
-                  <div className="rounded-xl border border-yellow-500/30 bg-yellow-950/20 p-3 text-xs text-yellow-200/90 leading-relaxed">
-                    <div className="font-bold text-yellow-300 mb-1">Tier {hintTier} Hint:</div>
-                    {hintContent}
-                  </div>
-                ) : (
-                  <p className="text-xs text-zinc-500 italic">
-                    Select a tier above to reveal a hint without spoiling the full solution.
-                  </p>
-                )}
-              </div>
+            {problemTab === "hints" && challenge && (
+              <ProgressiveHintPanel
+                challengeId={id}
+                challengeTitle={challenge.title}
+                code={code}
+                className="flex-1"
+              />
             )}
           </div>
+
 
           {/* ============================================================
               CENTER PANEL: CODE EDITOR & TEST EXECUTION CONSOLE

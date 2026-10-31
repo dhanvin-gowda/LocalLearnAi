@@ -120,7 +120,9 @@ function getInitialStore(): ChatStoreState {
   try {
     if (fs.existsSync(DATA_FILE)) {
       const raw = fs.readFileSync(DATA_FILE, "utf-8");
-      fileData = JSON.parse(raw);
+      if (raw && raw.trim()) {
+        fileData = JSON.parse(raw);
+      }
     }
   } catch (err) {
     console.error("Failed to read chat_db.json:", err);

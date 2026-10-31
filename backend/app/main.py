@@ -9,6 +9,8 @@ from app.config import get_settings
 from app.routes import api_router
 from app.routes.challenges import router as challenges_router
 from app.routes.tutor import router as tutor_router
+from app.routes.hints import router as hints_router
+
 
 # Configure logging
 logging.basicConfig(
@@ -93,7 +95,9 @@ def root():
 # Register all API endpoints
 app.include_router(challenges_router)  # Direct /challenges endpoints
 app.include_router(tutor_router)       # Direct /tutor endpoints
+app.include_router(hints_router)       # Direct /hints endpoints
 app.include_router(api_router)         # Versioned /api/v1 endpoints
+
 
 
 if __name__ == "__main__":
